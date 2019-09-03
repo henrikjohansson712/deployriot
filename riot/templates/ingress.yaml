@@ -30,4 +30,11 @@ spec:
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+    - host: scitest.esss.lu.se
+      http:
+        paths:
+          - path: /riot
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
 {{- end -}}
