@@ -34,7 +34,10 @@ spec:
               port: {{ .Values.service.internalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-          volumeMounts: []
+          volumeMounts: 
+            - name: config-volume
+              mountPath: /etc/riot-web/config.json
+              subPath: config.json
       volumes:
         - name: config-volume
           configMap:
