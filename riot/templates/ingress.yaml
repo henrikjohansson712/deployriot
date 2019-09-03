@@ -17,7 +17,6 @@ metadata:
       {{ $key }}: {{ $value | quote }}
     {{- end }}
     ingress.kubernetes.io/ssl-redirect: "true"
-    ingress.kubernetes.io/rewrite-target: /$2
 
 spec:
   tls:
@@ -28,14 +27,14 @@ spec:
     - host: {{ $host }}
       http:
         paths:
-          - path: /riot(/|$)(.*)
+          - path: /riot
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
     - host: scitest.esss.lu.se
       http:
         paths:
-          - path: /riot(/|$)(.*)
+          - path: /riot
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
