@@ -10,7 +10,7 @@ service:
   name: riot
   type: ClusterIP
   externalPort: 80
-  internalPort: 3000
+  internalPort: 80
 ingress:
   enabled: true
   # Used to create an Ingress record.
