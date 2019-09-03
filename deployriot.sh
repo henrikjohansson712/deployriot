@@ -14,4 +14,3 @@ elif  [ "$(hostname)" == "k8-lrg-serv-prod.esss.dk" ]; then
 fi
 
 helm install riot --name riot --namespace dev ${INGRESS_NAME}
-# --set image.tag=latest --set image.repository garethcmurphy/lb-panosc
