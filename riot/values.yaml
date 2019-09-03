@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: bubuntux/riot-web/
+  repository: bubuntux/riot-web
   tag: latest
   pullPolicy: Always
 service:
