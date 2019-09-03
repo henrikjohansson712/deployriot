@@ -28,7 +28,7 @@ spec:
     - host: {{ $host }}
       http:
         paths:
-          - path: /riot
+          - path: /riot(/|$)(.*)
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
