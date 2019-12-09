@@ -1,14 +1,12 @@
 {{- if .Values.ingress.enabled -}}
-{{- $serviceName := include "fullname" . -}}
+{{- $serviceName := include "riot.fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
-{{- $namespace := .Release.Namespace -}}
-{{- $host := .Values.ingress.host -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ $serviceName }}
   labels:
-    app: {{ template "name" . }}
+    app: {{ include "riot.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -21,21 +19,38 @@ metadata:
 spec:
   tls:
   - secretName: riotservice
+  {{- if eq .Release.Namespace "production"}}
     hosts:
-    - {{ $host }}
+    - scichat.esss.lu.se
   rules:
-    - host: {{ $host }}
+    - host: scichat.esss.lu.se
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- else if eq .Release.Namespace "qa"}}
+  hosts:
+    - scicat07.esss.lu.se
+  rules:
+    - host: scicat07.esss.lu.se
       http:
         paths:
           - path: /riot
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
-    - host: scitest.esss.lu.se
+  {{- else }}
+  hosts:
+    - scicat08.esss.lu.se
+  rules:
+    - host: scicat08.esss.lu.se
       http:
         paths:
           - path: /riot
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+  {{- end }}
 {{- end -}}

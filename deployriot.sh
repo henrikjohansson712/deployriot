@@ -1,16 +1,38 @@
 #!/usr/bin/env bash
-git pull
-helm del --purge riot
-
-
-if  [ "$(hostname)" == "scicat01.esss.lu.se" ]; then
-    envarray=(ess)
-    INGRESS_NAME="-f ./riot/lund.yaml"
-    BUILD="false"
-elif  [ "$(hostname)" == "k8-lrg-serv-prod.esss.dk" ]; then
-    envarray=(dmscprod)
-    INGRESS_NAME="-f ./riot/dmscprod.yaml"
-    BUILD="false"
+if [ "$#" -ne 1 ]; then
+  echo "Usage ./deployriot.sh ENVIRONMENT" >&2
+  exit 1
 fi
+export env=$1
 
-helm install riot --name riot --namespace dev ${INGRESS_NAME}
+export REPO=https://github.com/SciCatProject/riot-web.git
+
+
+echo $1
+
+cd ./riot/
+if [ -d "./component/" ]; then
+    cd component/
+    git checkout master
+    git pull
+else
+    git clone $REPO component
+    cd component/
+    git checkout master
+fi
+tag=$(git rev-parse HEAD)
+
+echo "Deploying to Kubernetes"
+cd ..
+function docker_tag_exists() {
+    curl --silent -f -lSL https://index.docker.io/v1/repositories/$1/tags/$2 > /dev/null
+}
+
+if docker_tag_exists dacat/scichat $tag; then
+  echo exists
+  helm upgrade riot-${env} riot --namespace=${env} --set image.tag=${tag}
+  helm history riot-${env}
+  echo "To roll back do: helm rollback --wait --recreate-pods riot-${env} revision-number"
+else
+  echo not exists
+fi
