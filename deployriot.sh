@@ -10,7 +10,6 @@ export REPO=https://github.com/SciCatProject/riot-web.git
 
 echo $1
 
-cd ./riot/
 if [ -d "./component/" ]; then
     cd component/
     git checkout master
