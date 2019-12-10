@@ -6,6 +6,10 @@ image:
   repository: dacat/scichat
   tag: a60f8e187615b672cd2cea29f209a02f29d73208
   pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
 service:
   name: riot
   type: NodePort
