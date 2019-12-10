@@ -36,7 +36,7 @@ spec:
     - host: scicat06.esss.lu.se
       http:
         paths:
-          - path: /
+          - path: /riot
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
