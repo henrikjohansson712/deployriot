@@ -31,9 +31,9 @@ spec:
               servicePort: {{ $servicePort }}
   {{- else if eq .Release.Namespace "qa"}}
   hosts:
-    - scicat07.esss.lu.se
+    - scicat06.esss.lu.se
   rules:
-    - host: scicat07.esss.lu.se
+    - host: scicat06.esss.lu.se
       http:
         paths:
           - path: /riot
