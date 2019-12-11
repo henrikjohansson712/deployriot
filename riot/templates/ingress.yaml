@@ -17,10 +17,10 @@ metadata:
 
 spec:
   tls:
-  - secretName: riotservice
   {{- if eq .Release.Namespace "production"}}
-    hosts:
+  - hosts:
     - scichat.esss.lu.se
+    secretName: riotservice
   rules:
     - host: scichat.esss.lu.se
       http:
@@ -30,8 +30,9 @@ spec:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
   {{- else if eq .Release.Namespace "qa"}}
-  hosts:
+  - hosts:
     - scicat06.esss.lu.se
+    secretName: riotservice
   rules:
     - host: scicat06.esss.lu.se
       http:
@@ -41,8 +42,9 @@ spec:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
   {{- else }}
-  hosts:
+  - hosts:
     - scicat08.esss.lu.se
+    secretName: riotservice
   rules:
     - host: scicat08.esss.lu.se
       http:
