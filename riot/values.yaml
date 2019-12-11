@@ -12,7 +12,7 @@ fullnameOverride: ""
 
 service:
   name: riot
-  type: NodePort
+  type: ClusterIP
   externalPort: 80
   internalPort: 80
 ingress:
