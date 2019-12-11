@@ -43,10 +43,10 @@ spec:
               servicePort: {{ $servicePort }}
   {{- else }}
   - hosts:
-    - scicat08.esss.lu.se
+    - scicat05.esss.lu.se
     secretName: riotservice
   rules:
-    - host: scicat08.esss.lu.se
+    - host: scicat05.esss.lu.se
       http:
         paths:
           - path: /
